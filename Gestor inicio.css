@@ -1,0 +1,26 @@
+    body {
+        background-color: #003a57;
+    }
+    
+    h1 {
+        text-align: center;
+        color: white;
+        font-family: 'Courier New', Courier, monospace;
+        vertical-align: middle;
+    }
+    
+    .boton {
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        background-color: #04547c;
+        color: white;
+        border: 0px;
+        border-radius: 15px;
+        width: 10%;
+        
+    }
