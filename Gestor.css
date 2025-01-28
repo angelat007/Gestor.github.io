@@ -90,3 +90,7 @@
         .btn:hover {
             background-color: #005a80;
         }
+
+        .Ir-a-inicio {
+            text-align: calc();
+        }
