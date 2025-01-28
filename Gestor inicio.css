@@ -1,11 +1,13 @@
     body {
-        background-color: #003a57;
+        background-image: url(https://wallpapers.com/images/hd/project-management-tools-illustration-20vwwkbworhkpzff.jpg);
+        background-size: cover;
+        
     }
     
     h1 {
         text-align: center;
         color: white;
-        font-family: 'Courier New', Courier, monospace;
+        font-family: "Aharoni", 'Courier New', Courier, monospace;
         vertical-align: middle;
     }
     
@@ -17,7 +19,8 @@
     }
 
     button {
-        background-color: #04547c;
+        background-color: #aaaaaaa4;
+        font-family: "Aharoni", 'Courier New', Courier, monospace;
         color: white;
         border: 0px;
         border-radius: 15px;
