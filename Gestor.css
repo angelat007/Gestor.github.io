@@ -13,29 +13,49 @@
             position: fixed;
         }
 
-        .barra {
-            background-color: #003a57;
-            color: white;
-            padding: 10px;
-            height: 100vh;
-            width: 250px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+.barra {
+    background-color: #003a57;
+    color: white;
+    padding: 5px;
+    height: 100vh;
+    width: 0px; /* Barra retraída */
+    overflow: hidden;
+    position: fixed;
+    transition: width 1.3s ease-in-out;
+    white-space: nowrap;
+}
 
-        .barra a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            display: flex;
-        }
+.barra:hover {
+    width: 250px; /* Se expande al pasar el mouse */
+}
 
-        .barra a:hover {
-            text-decoration: underline;
-            background-color: #005a807a;
-            transition: background-color 1s;
-        }
+.barra a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6.3px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.barra a img {
+    min-width: 20px;
+    height: 20px;
+}
+
+.barra:hover a {
+    justify-content: flex-start;
+}
+
+.barra a:hover {
+    text-decoration: underline;
+    background-color: #005a807a;
+    transition: background-color 0.3s;
+}
+
         
         .icono-tarea {
             filter: invert(1);
