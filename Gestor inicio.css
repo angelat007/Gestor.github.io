@@ -1,5 +1,5 @@
     body {
-        background-image: url(https://wallpapers.com/images/hd/project-management-tools-illustration-20vwwkbworhkpzff.jpg);
+        background-color: #003a57;
         background-size: cover;
         
     }
@@ -19,7 +19,7 @@
     }
 
     button {
-        background-color: #aaaaaaa4;
+        background-color: #05537a;
         font-family: "Aharoni", 'Courier New', Courier, monospace;
         color: white;
         border: 0px;
