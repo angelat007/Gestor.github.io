@@ -42,6 +42,9 @@ class TaskManager {
     }
 
     addTask() {
+        const imagePreview = document.querySelector('#imagePreview img');
+        const imagen = imagePreview ? imagePreview.src : null;
+
         const formData = {
             id: Date.now(),
             codigo: document.getElementById('codigo').value,
@@ -51,10 +54,10 @@ class TaskManager {
             estado: document.getElementById('estado').value,
             vencimiento: document.getElementById('vencimiento').value,
             asignado: document.getElementById('asignado').value || 'No asignado',
-            fechaCreacion: new Date().toLocaleDateString()
+            fechaCreacion: new Date().toLocaleDateString(),
+            imagen: imagen // ✅ Guardar imagen (base64)
         };
 
-        // Validate unique code
         if (this.tasks.some(task => task.codigo === formData.codigo)) {
             this.showNotification('⚠️ El código de tarea ya existe', 'warning');
             return;
@@ -66,6 +69,7 @@ class TaskManager {
         this.resetForm();
         this.showNotification('✅ Tarea creada exitosamente');
     }
+
 
     updateTasksDisplay() {
         const tasksList = document.getElementById('tasks-list');
@@ -84,21 +88,32 @@ class TaskManager {
         taskCount.textContent = `${this.tasks.length} tarea${this.tasks.length !== 1 ? 's' : ''}`;
 
         tasksList.innerHTML = this.tasks.map(task => `
-                    <div class="task-item priority-${task.prioridad}">
-                        <div class="task-header">
-                            <h3 class="task-title">${task.nombre}</h3>
-                            <span class="task-code">${task.codigo}</span>
-                        </div>
-                        <p class="task-description">${task.descripcion}</p>
-                        <div class="task-meta">
-                            <span class="task-badge status-${task.estado}">${this.getStatusLabel(task.estado)}</span>
-                            <span class="task-badge priority-${task.prioridad === 'alta' ? 'high' : task.prioridad === 'media' ? 'medium' : 'low'}">${this.getPriorityLabel(task.prioridad)}</span>
-                            <span>📅 ${new Date(task.vencimiento).toLocaleDateString()}</span>
-                            <span>👤 ${task.asignado}</span>
-                            <button onclick="taskManager.deleteTask(${task.id})" style="background: var(--danger-color); color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Eliminar</button>
-                        </div>
-                    </div>
-                `).join('');
+    <div class="task-item priority-${task.prioridad}">
+        <div class="task-header">
+            <h3 class="task-title">${task.nombre}</h3>
+            <span class="task-code">${task.codigo}</span>
+        </div>
+
+        ${task.imagen ? `
+  <div style="margin-top: 0.5rem; border-radius: 10px; overflow: hidden; border: 1px solid #ddd;">
+    <img src="${task.imagen}" 
+         style="display: block; width: 100%; height: auto; max-height: 300px; object-fit: contain; background: #f9f9f9;" 
+         alt="Imagen de la tarea">
+  </div>
+` : ''}
+
+
+        <p class="task-description">${task.descripcion}</p>
+        <div class="task-meta">
+            <span class="task-badge status-${task.estado}">${this.getStatusLabel(task.estado)}</span>
+            <span class="task-badge priority-${task.prioridad === 'alta' ? 'high' : task.prioridad === 'media' ? 'medium' : 'low'}">${this.getPriorityLabel(task.prioridad)}</span>
+            <span>📅 ${new Date(task.vencimiento).toLocaleDateString()}</span>
+            <span>👤 ${task.asignado}</span>
+            <button onclick="taskManager.deleteTask(${task.id})" style="background: var(--danger-color); color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Eliminar</button>
+        </div>
+    </div>
+`).join('');
+
     }
 
     getStatusLabel(status) {
@@ -227,16 +242,23 @@ class TaskManager {
     }
 
     loadTasks() {
-        // In a real application, this would load from a database
-        // For now, we'll use an empty array as browser storage is not supported
-        return [];
+        try {
+            const stored = JSON.parse(localStorage.getItem('tasks') || '[]');
+            return Array.isArray(stored) ? stored : [];
+        } catch (error) {
+            console.error('Error al cargar tareas:', error);
+            return [];
+        }
     }
 
     saveTasks() {
-        // In a real application, this would save to a database
-        // For now, tasks are only stored in memory during the session
-        console.log('Tasks saved:', this.tasks);
+        try {
+            localStorage.setItem('tasks', JSON.stringify(this.tasks));
+        } catch (error) {
+            console.error('Error al guardar las tareas:', error);
+        }
     }
+
 
     toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
@@ -245,8 +267,82 @@ class TaskManager {
         sidebar.classList.toggle('hidden');
         mainContent.classList.toggle('expanded');
     }
-
 }
+
+// Código para manejo de imágenes fuera de la clase TaskManager
+document.addEventListener('DOMContentLoaded', () => {
+    const fileInput = document.getElementById('fileInput');
+    const galleryBtn = document.getElementById('galleryBtn');
+    const cameraBtn = document.getElementById('cameraBtn');
+    const imagePreview = document.getElementById('imagePreview');
+    const video = document.getElementById('cameraVideo');
+    const canvas = document.getElementById('cameraCanvas');
+    const removeBtn = document.getElementById('removeImageBtn');
+
+    // Mostrar selector de archivos
+    galleryBtn.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    // Cargar imagen desde archivo
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                showImagePreview(event.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Iniciar cámara
+    cameraBtn.addEventListener('click', async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+            video.style.display = 'block';
+
+            // Esperar un poco y capturar
+            setTimeout(() => {
+                const context = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = canvas.toDataURL('image/png');
+                showImagePreview(imageData);
+
+                // Detener la cámara
+                stream.getTracks().forEach(track => track.stop());
+                video.style.display = 'none';
+            }, 2000); // Captura después de 2 segundos
+        } catch (err) {
+            alert('No se pudo acceder a la cámara');
+            console.error(err);
+        }
+    });
+
+    // Eliminar imagen
+    removeBtn.addEventListener('click', () => {
+        imagePreview.innerHTML = `
+            <div class="image-placeholder">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21,15 16,10 5,21"/>
+                </svg>
+                <p>No hay imagen seleccionada</p>
+            </div>
+        `;
+        removeBtn.style.display = 'none';
+    });
+
+    // Mostrar la imagen en el preview
+    function showImagePreview(src) {
+        imagePreview.innerHTML = `<img src="${src}" style="width: 100%; height: auto; border-radius: 8px;" />`;
+        removeBtn.style.display = 'inline-block';
+    }
+});
 
 // Global functions
 function resetForm() {
