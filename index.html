@@ -1,19 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de tareas</title>
-    <link rel="stylesheet" href="Gestor inicio.css">
-    <link rel="styles icon" href="https://cdn-icons-png.flaticon.com/512/2721/2721299.png">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+    <link rel="stylesheet" href="css/inicio.css">
+    <title>Gestor de Tareas Profesional</title>
+    <style>
+
+    </style>
 </head>
-<body>  
-    <div>   
-        
-    <br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <h1>GESTOR DE TAREAS</h1>
-    <a class="boton" href="Nueva tarea.html"><button>Entrar</button></a>
-    
+
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div><br>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <img src="Media/Medio-logo.png" width="30px" alt=""> Gestor de tareas
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#características">Características</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Floating Background Elements -->
+    <div class="floating-elements">
+        <div class="floating-element">📝</div>
+        <div class="floating-element">✅</div>
+        <div class="floating-element">📊</div>
+        <div class="floating-element">⏰</div>
+        <div class="floating-element">👾</div>
+        <div class="floating-element">🤖</div>
+        <div class="floating-element">🧠</div>
     </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="hero">
+            <div class="hero-icon"><img src="Media/Medio-logo.png" width="80px" alt=""></div>
+            <h1>Gestor de Tareas Profesional</h1>
+            <p class="hero-subtitle">
+                La herramienta definitiva para organizar, gestionar y completar todas tus tareas de manera eficiente.
+                Aumenta tu productividad y nunca pierdas el control de tus proyectos.
+            </p>
+
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="enterApp()">
+                    Comenzar Ahora
+                </button>
+                <a href="#características" class="btn btn-secondary">
+                    Ver Características
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="100">0</span>
+                    <div class="stat-label">% Eficiencia</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="24">0</span>
+                    <div class="stat-label">Horas Ahorradas</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="500">0</span>
+                    <div class="stat-label">Tareas Completadas</div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="features" id="características">
+                <h2 style="color: white; font-size: 2rem; margin-bottom: 1rem; text-align: center;">
+                    ¿Por qué elegir nuestro gestor?
+                </h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🎯</span>
+                        <h3 class="feature-title">Gestión Intuitiva</h3>
+                        <p class="feature-description">
+                            Interfaz simple y elegante que te permite crear, editar y organizar tus tareas sin
+                            complicaciones.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">📊</span>
+                        <h3 class="feature-title">Seguimiento Completo</h3>
+                        <p class="feature-description">
+                            Monitorea el progreso de tus proyectos con estados, prioridades y fechas de vencimiento.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🔍</span>
+                        <h3 class="feature-title">Búsqueda Avanzada</h3>
+                        <p class="feature-description">
+                            Encuentra cualquier tarea rápidamente con nuestro sistema de búsqueda y filtros
+                            inteligentes.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">📱</span>
+                        <h3 class="feature-title">Diseño Responsivo</h3>
+                        <p class="feature-description">
+                            Accede a tus tareas desde cualquier dispositivo con una experiencia optimizada.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">⚡</span>
+                        <h3 class="feature-title">Rendimiento Óptimo</h3>
+                        <p class="feature-description">
+                            Aplicación rápida y eficiente que no compromete la velocidad por la funcionalidad.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🎨</span>
+                        <h3 class="feature-title">Interfaz Moderna</h3>
+                        <p class="feature-description">
+                            Diseño contemporáneo con animaciones suaves y una experiencia visual atractiva.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/inicio.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Media/Medio-logo.png">
+    <link rel="stylesheet" href="css/gestor.css">
+    <title>Gestor de Tareas</title>
+</head>
+
+<body>
+     <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <svg viewBox="0 0 24 24">
+            <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+    </button>
+
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><img src="Media/Medio-logo-blanco.png" width="30px" alt=""> Gestor de Tareas</h2>
+        </div>
+
+        <div class="sidebar-nav">
+            <a href="#" class="nav-item" data-section="tasks">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Ver Tareas
+            </a>
+            <a href="#" class="nav-item active" data-section="new-task">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 4v16m8-8H4" />
+                </svg>
+                Nueva Tarea
+            </a>
+            <a href="#" class="nav-item" data-section="search">
+                <svg viewBox="0 0 24 24">
+                    <path d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Buscar
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <a href="index.html" class="nav-item">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Inicio
+            </a>
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Cerrar Sesión
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Nueva Tarea Section -->
+        <section id="new-task-section">
+            <div class="content-header">
+                <h1>🔖 Nueva Tarea</h1>
+                <p>Crea una nueva tarea para tu gestión personal o profesional</p>
+            </div>
+
+            <form class="task-form" id="taskForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="codigo">Código de Tarea</label>
+                        <input type="text" id="codigo" class="form-input" placeholder="Ej: TSK-001" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="nombre">Nombre de la Tarea</label>
+                        <input type="text" id="nombre" class="form-input" placeholder="Ej: Revisar documentos" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label class="form-label" for="descripcion">Descripción</label>
+                        <textarea id="descripcion" class="form-input form-textarea"
+                            placeholder="Describe detalladamente la tarea a realizar..." required></textarea>
+                    </div>
+
+                    <!-- Nueva sección de imagen -->
+                    <div class="form-group full-width">
+                        <label class="form-label">Imagen de la Tarea</label>
+                        <div class="image-upload-container">
+                            <div class="image-preview" id="imagePreview">
+                                <div class="image-placeholder">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                                        <polyline points="21,15 16,10 5,21"/>
+                                    </svg>
+                                    <p>No hay imagen seleccionada</p>
+                                </div>
+                            </div>
+                            <div class="image-buttons">
+                                <button type="button" class="btn btn-secondary" id="cameraBtn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                        <circle cx="12" cy="13" r="4"/>
+                                    </svg>
+                                    Tomar Foto
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="galleryBtn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                                        <polyline points="21,15 16,10 5,21"/>
+                                    </svg>
+                                    Galería
+                                </button>
+                                <button type="button" class="btn btn-danger" id="removeImageBtn" style="display: none;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3,6 5,6 21,6"/>
+                                        <path d="M19,6v14a2,2 0 0,1-2,2H7a2,2 0 0,1-2-2V6"/>
+                                        <path d="M8,6V4a2,2 0 0,1,2-2h4a2,2 0 0,1,2,2v2"/>
+                                    </svg>
+                                    Eliminar
+                                </button>
+                            </div>
+                            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                            <video id="cameraVideo" style="display: none;" width="320" height="240" autoplay></video>
+                            <canvas id="cameraCanvas" style="display: none;" width="320" height="240"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="prioridad">Nivel de Prioridad</label>
+                        <select id="prioridad" class="form-input form-select" required>
+                            <option value="">Seleccionar prioridad</option>
+                            <option value="alta">🔴 Alta</option>
+                            <option value="media">🟡 Media</option>
+                            <option value="baja">🟢 Baja</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="estado">Estado Inicial</label>
+                        <select id="estado" class="form-input form-select" required>
+                            <option value="pendiente">⏳ Pendiente</option>
+                            <option value="progreso">🔄 En Progreso</option>
+                            <option value="completada">✅ Completada</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="vencimiento">Fecha de Vencimiento</label>
+                        <input type="date" id="vencimiento" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="asignado">Asignado a</label>
+                        <input type="text" id="asignado" class="form-input" placeholder="Nombre del responsable">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 4v16m8-8H4" />
+                        </svg>
+                        Registrar Tarea
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+                        </svg>
+                        Limpiar
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Tasks List Section -->
+        <section id="tasks-section" style="display: none;">
+            <div class="content-header">
+                <h1>📋 Mis Tareas</h1>
+                <p>Gestiona y visualiza todas tus tareas</p>
+            </div>
+
+            <div class="tasks-container">
+                <div class="tasks-header">
+                    <h3>Lista de Tareas</h3>
+                    <span id="task-count">0 tareas</span>
+                </div>
+                <div id="tasks-list">
+                    <div style="padding: 2rem; text-align: center; color: var(--secondary-color);">
+                        No hay tareas registradas. ¡Crea tu primera tarea!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <section id="search-section" style="display: none;">
+            <div class="content-header">
+                <h1>🔍 Buscar Tareas</h1>
+                <p>Encuentra tareas específicas usando filtros</p>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: var(--shadow);">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="search-text">Buscar por texto</label>
+                        <input type="text" id="search-text" class="form-input"
+                            placeholder="Nombre, código o descripción...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="filter-status">Filtrar por estado</label>
+                        <select id="filter-status" class="form-input form-select">
+                            <option value="">Todos los estados</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="progreso">En Progreso</option>
+                            <option value="completada">Completada</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="search-results" style="margin-top: 2rem;"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Camera Modal -->
+    <div id="cameraModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📷 Tomar Foto</h3>
+                <button class="modal-close" id="closeCameraModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <video id="modalCameraVideo" width="100%" height="auto" autoplay></video>
+                <div class="camera-controls">
+                    <button class="btn btn-primary" id="captureBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+                        </svg>
+                        Capturar
+                    </button>
+                    <button class="btn btn-secondary" id="cancelCameraBtn">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+    <script src="js/tarea.js"></script>
+</body>
+
+</html>
