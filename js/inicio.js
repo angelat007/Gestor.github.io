@@ -102,34 +102,3 @@
 
         // Initialize dynamic greeting
         setDynamicGreeting();
-
-        // Add particle effect on mouse move
-        document.addEventListener('mousemove', (e) => {
-            const particle = document.createElement('div');
-            particle.style.position = 'fixed';
-            particle.style.left = e.clientX + 'px';
-            particle.style.top = e.clientY + 'px';
-            particle.style.width = '4px';
-            particle.style.height = '4px';
-            particle.style.background = 'rgba(255, 255, 255, 0.6)';
-            particle.style.borderRadius = '50%';
-            particle.style.pointerEvents = 'none';
-            particle.style.zIndex = '1000';
-            particle.style.animation = 'fadeOut 1s ease-out forwards';
-            
-            document.body.appendChild(particle);
-            
-            setTimeout(() => {
-                particle.remove();
-            }, 1000);
-        });
-
-        // CSS for particle fade out
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeOut {
-                0% { opacity: 1; transform: scale(1); }
-                100% { opacity: 0; transform: scale(0); }
-            }
-        `;
-        document.head.appendChild(style);
