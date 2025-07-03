@@ -532,15 +532,20 @@ body {
     color: #065f46;
 }
 
-/* Responsive Design */
+/* Responsive cel */
 @media (max-width: 768px) {
-    .sidebar {
+    #sidebar {
         width: 100%;
+        height: 100%;
         transform: translateX(-100%);
     }
 
-    .sidebar.show-mobile {
+    #sidebar.hidden {
         transform: translateX(0);
+    }
+
+    #mainContent {
+        margin-left: 0;
     }
 
     .main-content {
