@@ -297,30 +297,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Iniciar cámara
-    cameraBtn.addEventListener('click', async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            video.srcObject = stream;
-            video.style.display = 'block';
+    const cameraInput = document.getElementById('cameraInput');
 
-            // Esperar un poco y capturar
-            setTimeout(() => {
-                const context = canvas.getContext('2d');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData = canvas.toDataURL('image/png');
-                showImagePreview(imageData);
+    cameraBtn.addEventListener('click', () => {
+        cameraInput.click(); // Abrir directamente la cámara del dispositivo
+    });
 
-                // Detener la cámara
-                stream.getTracks().forEach(track => track.stop());
-                video.style.display = 'none';
-            }, 2000); // Captura después de 2 segundos
-        } catch (err) {
-            alert('No se pudo acceder a la cámara');
-            console.error(err);
+    cameraInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                showImagePreview(event.target.result); // Esta función ya está definida y funciona
+            };
+            reader.readAsDataURL(file);
         }
     });
+
 
     // Eliminar imagen
     removeBtn.addEventListener('click', () => {
